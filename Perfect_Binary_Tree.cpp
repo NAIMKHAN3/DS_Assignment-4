@@ -46,27 +46,28 @@ Node *inputTree()
     }
     return root;
 }
-void leafNodePrintReverse(Node *root, vector<int> &v)
+bool perfectBinaryTree(Node *root)
 {
     if (root == NULL)
-        return;
-    if (root->left == NULL && root->right == NULL)
-       v.push_back(root->val);
-    if (root->right)
-        leafNodePrintReverse(root->right,v);
-    if (root->left)
-        leafNodePrintReverse(root->left,v);
-}
+        return true;
+    if (root->left == NULL && root->right == NULL || root->left && root->right)
+        return true;
+    if (root->left != NULL || root->right != NULL)
+        return false;
 
+    bool r = perfectBinaryTree(root->right);
+
+    bool l = perfectBinaryTree(root->left);
+    return (r && l);
+}
 
 int main()
 {
-    vector<int> v;
     Node *root = inputTree();
-    leafNodePrintReverse(root,v);
-     sort(v.begin(), v.end(), greater<int>());
-     for(int val : v){
-        cout << val << " ";
-     }
+    bool ans = perfectBinaryTree(root);
+    if (ans)
+        cout << "YES";
+    else
+        cout << "NO";
     return 0;
 }
