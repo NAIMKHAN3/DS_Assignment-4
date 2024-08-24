@@ -50,14 +50,13 @@ bool perfectBinaryTree(Node *root)
 {
     if (root == NULL)
         return true;
-    if (root->left == NULL && root->right == NULL || root->left && root->right)
+      if (root->left == NULL && root->right == NULL)
         return true;
-    if (root->left != NULL || root->right != NULL)
+    if (root->left == NULL || root->right == NULL)
         return false;
 
-    bool r = perfectBinaryTree(root->right);
-
     bool l = perfectBinaryTree(root->left);
+    bool r = perfectBinaryTree(root->right);
     return (r && l);
 }
 
